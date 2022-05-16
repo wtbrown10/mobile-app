@@ -1,11 +1,21 @@
 package com.will.mobile_app.ui.controller;
 
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.will.mobile_app.service.UserService;
+import com.will.mobile_app.shared.dto.UserDTO;
 import com.will.mobile_app.ui.model.request.UserDetailsRequestModel;
+import com.will.mobile_app.ui.model.response.UserRest;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static com.fasterxml.jackson.databind.util.BeanUtil.*;
 
 @RestController
 @RequestMapping("users")//http://localhost:8080/users
 public class UserController {
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public String getUser(){
@@ -14,9 +24,18 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody UserDetailsRequestModel userDetails){
+    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails){
 
-        return "Create user was called!";
+        UserRest returnValue = new UserRest();
+
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(userDetails, userDTO);
+
+        UserDTO createdUser = userService.createUser(userDTO);
+        BeanUtils.copyProperties(createdUser, returnValue);
+
+
+        return null;
     }
 
     @PutMapping
