@@ -1,5 +1,6 @@
 package com.will.mobile_app.ui.controller;
 
+import com.will.mobile_app.ui.model.request.UserDetailsRequestModel;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,7 +14,7 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(){
+    public String createUser(@RequestBody UserDetailsRequestModel userDetails){
 
         return "Create user was called!";
     }
