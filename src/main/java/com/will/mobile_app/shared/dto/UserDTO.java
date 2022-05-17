@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID =
-            -4546991534262748857L;
+            6081189768764447543L;
     private long id;
     private String userId;
     private String firstName;
@@ -12,7 +12,7 @@ public class UserDTO implements Serializable {
     private String email;
     private String password;
     private String encryptedPassword;
-    private String emailVerificationToken;
+    private Boolean emailVerificationToken = false;
 
     public long getId() {
         return id;
@@ -70,12 +70,12 @@ public class UserDTO implements Serializable {
         this.encryptedPassword = encryptedPassword;
     }
 
-    public String getEmailVerificationToken() {
+    public Boolean getEmailVerificationToken() {
         return emailVerificationToken;
     }
 
     public void setEmailVerificationToken(String emailVerificationToken) {
-        this.emailVerificationToken = emailVerificationToken;
+        this.emailVerificationToken = Boolean.valueOf(emailVerificationToken);
     }
 
     public Boolean getEmailVerificationStatus() {
