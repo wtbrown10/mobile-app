@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
-
+//this is the entity class
 @Entity(name="users")
 public class UserEntity implements Serializable {
 
