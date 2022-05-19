@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.fasterxml.jackson.databind.util.BeanUtil.*;
-import static org.springframework.beans.BeanUtils.copyProperties;
+import static org.springframework.beans.BeanUtils.copyProperties; //git config --global user.email "wtbrown10@gmail.com"
 
-//
+//service class
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
