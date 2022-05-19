@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import static com.fasterxml.jackson.databind.util.BeanUtil.*;
 import static org.springframework.beans.BeanUtils.copyProperties;
 
+//
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO user) {
 
         UserEntity userEntity = new UserEntity();
-        copyProperties(user, userEntity);
+        copyProperties(user, userEntity); // user gets properties of userEntity
 
         userEntity.setEncryptedPassword("test");
 

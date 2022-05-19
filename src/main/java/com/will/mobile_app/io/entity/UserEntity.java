@@ -6,7 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-@Entity(name="users")
+//Class is used to store user details in mySQL database
+@Entity(name="users")// table name is users
 public class UserEntity implements Serializable {
 
     private static final long serialVersionUID =
@@ -15,9 +16,9 @@ public class UserEntity implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-    @Column(nullable = false)
+    @Column(nullable = false)// makes it a required field
     private String userId;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50)// length sets size of the field
     private String firstName;
     @Column(nullable = false, length = 50)
     private String lastName;

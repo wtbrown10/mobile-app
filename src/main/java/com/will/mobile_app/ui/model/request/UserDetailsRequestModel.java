@@ -1,5 +1,7 @@
 package com.will.mobile_app.ui.model.request;
 
+//Class is used to convert incoming JSON document into java class
+//contains information that was submitted to create new account
 public class UserDetailsRequestModel {
     private String firstName;
     private String lastName;

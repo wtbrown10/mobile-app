@@ -29,13 +29,12 @@ public class UserController {
         UserRest returnValue = new UserRest();
 
         UserDTO userDTO = new UserDTO();
-        BeanUtils.copyProperties(userDetails, userDTO);
+        BeanUtils.copyProperties(userDetails, userDTO); // copies properties from source object (userDetails) to target object (userDTO)
 
         UserDTO createdUser = userService.createUser(userDTO);
         BeanUtils.copyProperties(createdUser, returnValue);
 
-
-        return null;
+        return returnValue;
     }
 
     @PutMapping
