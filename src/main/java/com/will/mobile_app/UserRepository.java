@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Long> { //CrudRepository takes class that is being peristed into database and data type of id field
+public interface UserRepository extends
+        CrudRepository<UserEntity, Long> { //CrudRepository takes class that is being peristed into database and data type of id field
 
-//    UserEntity findUserByEmail(String email);
+    UserEntity findByEmail(String email);
 }
