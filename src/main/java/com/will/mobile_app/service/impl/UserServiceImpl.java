@@ -5,6 +5,7 @@ import com.will.mobile_app.UserRepository;
 import com.will.mobile_app.io.entity.UserEntity;
 import com.will.mobile_app.service.UserService;
 import com.will.mobile_app.shared.dto.UserDTO;
+import com.will.mobile_app.shared.dto.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,10 @@ import static org.springframework.beans.BeanUtils.copyProperties; //git config -
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    Utils utils;
+
     @Override
     public UserDTO createUser(UserDTO user) {
 
@@ -25,9 +30,12 @@ public class UserServiceImpl implements UserService {
 
         copyProperties(user, userEntity); // user gets properties of userEntity
 
+        String publicUserId = utils.generateUserId(20);
+
+        //String encryptedPassword = utils.generateRandomString(20);
         userEntity.setEncryptedPassword("test");
 
-        userEntity.setUserId("testUserId");
+        userEntity.setUserId(publicUserId);
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 
