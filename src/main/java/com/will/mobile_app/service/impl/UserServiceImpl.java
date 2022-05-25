@@ -1,7 +1,6 @@
 package com.will.mobile_app.service.impl;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import com.will.mobile_app.UserRepository;
+import com.will.mobile_app.io.repositories.UserRepository;
 import com.will.mobile_app.io.entity.UserEntity;
 import com.will.mobile_app.service.UserService;
 import com.will.mobile_app.shared.dto.UserDTO;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-import static com.fasterxml.jackson.databind.util.BeanUtil.*;
 import static org.springframework.beans.BeanUtils.copyProperties; //git config --global user.email "wtbrown10@gmail.com"
 
 //service class

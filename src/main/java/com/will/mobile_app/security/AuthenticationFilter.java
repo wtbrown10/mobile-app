@@ -1,6 +1,8 @@
 package com.will.mobile_app.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.will.mobile_app.SpringApplicationContext;
+import com.will.mobile_app.service.UserService;
 import com.will.mobile_app.ui.model.request.UserLoginRequestModel;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -45,8 +47,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
-
-    protected void succesfulAuthentication(HttpServletRequest req,
+@Override
+    protected void successfulAuthentication(HttpServletRequest req,
                                            HttpServletResponse res,
                                            FilterChain chain,
                                            Authentication auth) throws IOException, ServletException{
@@ -57,6 +59,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
                 .compact();
+    UserService userService = SpringApplicationContext.getBean("userServiceImpl")
 
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
     }

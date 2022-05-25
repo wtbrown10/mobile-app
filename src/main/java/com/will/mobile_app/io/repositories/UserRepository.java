@@ -1,4 +1,4 @@
-package com.will.mobile_app;
+package com.will.mobile_app.io.repositories;
 
 
 import com.will.mobile_app.io.entity.UserEntity;
