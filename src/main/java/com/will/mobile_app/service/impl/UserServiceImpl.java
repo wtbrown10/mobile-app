@@ -25,17 +25,16 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO user) {
 
         UserEntity userEntity = new UserEntity();
-
-        if (userRepository.findByEmail(user.getEmail()) != null) throw new RuntimeException("Record already exist");
-
         copyProperties(user, userEntity); // user gets properties of userEntity
 
-        String publicUserId = utils.generateUserId(20);
 
-        //String encryptedPassword = utils.generateRandomString(20);
-        userEntity.setEncryptedPassword("test");
+        if (userRepository.findByEmail(user.getEmail()) != null)
+            throw new RuntimeException("Record already exist");
 
+        String publicUserId = utils.generateUserId(30);
         userEntity.setUserId(publicUserId);
+
+        userEntity.setEncryptedPassword("test");
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 
