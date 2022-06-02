@@ -1,12 +1,18 @@
 package com.will.mobile_app.io.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.apache.tomcat.jni.Address;
+
+import javax.persistence.*;
 import java.io.Serializable;
+
 //this is the entity class
-@Entity(name="users")
+
+import java.util.List;
+
+//Class is used to store user details in mySQL database
+//Entity class has data that populates database
+@Entity(name="users")// table name is users
+
 public class UserEntity implements Serializable {
 
     private static final long serialVersionUID =
@@ -15,20 +21,28 @@ public class UserEntity implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-    @Column(nullable = false)
+    @Column(nullable = false)// makes it a required field
     private String userId;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50)// length sets size of the field
     private String firstName;
     @Column(nullable = false, length = 50)
     private String lastName;
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, length = 120, unique = true)
     private String email;
     @Column(nullable = false)
     private String encryptedPassword;
-    @Column(nullable = false)
     private String emailVerificationToken;
+
     @Column(nullable = false)
     private Boolean emailVerificationStatus = false;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getUserId() {
         return userId;
@@ -85,6 +99,4 @@ public class UserEntity implements Serializable {
     public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
         this.emailVerificationStatus = emailVerificationStatus;
     }
-
-
 }

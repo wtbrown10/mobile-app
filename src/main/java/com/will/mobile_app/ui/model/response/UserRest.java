@@ -1,5 +1,8 @@
 package com.will.mobile_app.ui.model.response;
 
+//class is used to convert Java object to an outgoing response
+//user info that has been sent back as a confirmation that user
+// details have been stored in database so this is what can be returned
 public class UserRest {
     private String userId;
     private String firstName;

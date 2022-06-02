@@ -1,35 +1,77 @@
 package com.will.mobile_app.service.impl;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import com.will.mobile_app.UserRepository;
+import com.will.mobile_app.io.repositories.UserRepository;
 import com.will.mobile_app.io.entity.UserEntity;
 import com.will.mobile_app.service.UserService;
 import com.will.mobile_app.shared.dto.UserDTO;
+import com.will.mobile_app.shared.dto.Utils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.fasterxml.jackson.databind.util.BeanUtil.*;
-import static org.springframework.beans.BeanUtils.copyProperties;
+import java.util.ArrayList;
 
+import static org.springframework.beans.BeanUtils.copyProperties; //git config --global user.email "wtbrown10@gmail.com"
+
+//service class
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    Utils utils;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public UserDTO createUser(UserDTO user) {
 
         UserEntity userEntity = new UserEntity();
-        copyProperties(user, userEntity);
+        copyProperties(user, userEntity); // user gets properties of userEntity
 
-        userEntity.setEncryptedPassword("test");
 
-        userEntity.setUserId("testUserId");
+        if (userRepository.findByEmail(user.getEmail()) != null)
+            throw new RuntimeException("Record already exist");
+
+        String publicUserId = utils.generateUserId(30);
+        userEntity.setUserId(publicUserId);
+
+        userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 
         UserDTO returnValue = new UserDTO();
         copyProperties(storedUserDetails, returnValue);
 
+        return returnValue;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByEmail(email);
+
+        if (userEntity == null) throw new UsernameNotFoundException(email);
+
+        return new User(userEntity.getEmail(),
+                userEntity.getEncryptedPassword(),
+                new ArrayList<>());
+    }
+
+    @Override
+    public  UserDTO getUser(String email){
+        UserEntity userEntity = userRepository.findByEmail(email);
+
+        if (userEntity == null) throw new UsernameNotFoundException(email);
+
+        UserDTO returnValue = new UserDTO();
+        BeanUtils.copyProperties(userEntity, returnValue);
         return returnValue;
     }
 }
